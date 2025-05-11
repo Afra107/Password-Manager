@@ -251,7 +251,7 @@ class _DropdownWidgetState extends State<DropdownWidget> {
                       SettingsWidget.routeName,
                       queryParameters: {
                         'initial2FAState': serializeParam(
-                          _model.accountInfo?.enable2FA,
+                          false,
                           ParamType.bool,
                         ),
                         'setupKey': serializeParam(

@@ -673,6 +673,7 @@ class _RegisterAccountWidgetState extends State<RegisterAccountWidget>
                           email: _model.emailAddressTextController.text,
                           initVector: _model.initVector,
                           enable2FA: false,
+                          en2FAsetupKey: '',
                         ));
                         _model.userDocument =
                             AccountInfoRecord.getDocumentFromData(
@@ -683,6 +684,7 @@ class _RegisterAccountWidgetState extends State<RegisterAccountWidget>
                                   email: _model.emailAddressTextController.text,
                                   initVector: _model.initVector,
                                   enable2FA: false,
+                                  en2FAsetupKey: '',
                                 ),
                                 accountInfoRecordReference);
                         FFAppState().symmetricKey = _model.symmetricKey!;

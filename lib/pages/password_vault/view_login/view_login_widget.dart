@@ -194,7 +194,7 @@ class _ViewLoginWidgetState extends State<ViewLoginWidget> {
                     width: 80.0,
                     height: 80.0,
                     decoration: BoxDecoration(
-                      color: Color(0xFF24254E),
+                      color: FlutterFlowTheme.of(context).appColor,
                       borderRadius: BorderRadius.circular(40.0),
                     ),
                     alignment: AlignmentDirectional(0.0, 0.0),
@@ -203,7 +203,7 @@ class _ViewLoginWidgetState extends State<ViewLoginWidget> {
                           EdgeInsetsDirectional.fromSTEB(2.0, 0.0, 0.0, 2.0),
                       child: Icon(
                         Icons.vpn_lock,
-                        color: Colors.white,
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
                         size: 50.0,
                       ),
                     ),

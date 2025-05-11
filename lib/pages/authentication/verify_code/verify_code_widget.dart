@@ -209,6 +209,7 @@ class _VerifyCodeWidgetState extends State<VerifyCodeWidget>
                                       .bodyLarge
                                       .fontStyle,
                                 ),
+                                color: Color(0xFF262D34),
                                 letterSpacing: 0.0,
                                 fontWeight: FlutterFlowTheme.of(context)
                                     .bodyLarge
@@ -239,7 +240,7 @@ class _VerifyCodeWidgetState extends State<VerifyCodeWidget>
                           topRight: Radius.circular(12.0),
                         ),
                         shape: PinCodeFieldShape.box,
-                        activeColor: FlutterFlowTheme.of(context).primaryText,
+                        activeColor: Color(0xFF262D34),
                         inactiveColor: Color(0xFF262D34),
                         selectedColor: FlutterFlowTheme.of(context).primary,
                       ),

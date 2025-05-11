@@ -56,6 +56,8 @@ abstract class FlutterFlowTheme {
   late Color error;
   late Color info;
 
+  late Color appColor;
+
   @Deprecated('Use displaySmallFamily instead')
   String get title1Family => displaySmallFamily;
   @Deprecated('Use displaySmall instead')
@@ -143,6 +145,8 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color warning = const Color(0xFFF9CF58);
   late Color error = const Color(0xFFFF5963);
   late Color info = const Color(0xFFFFFFFF);
+
+  late Color appColor = Color(0xFF24254E);
 }
 
 abstract class Typography {
@@ -188,6 +192,7 @@ class ThemeTypography extends Typography {
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 64.0,
+        fontStyle: FontStyle.normal,
       );
   String get displayMediumFamily => 'Inter Tight';
   TextStyle get displayMedium => GoogleFonts.interTight(
@@ -299,6 +304,8 @@ class DarkModeTheme extends FlutterFlowTheme {
   late Color warning = const Color(0xFFF9CF58);
   late Color error = const Color(0xFFFF5963);
   late Color info = const Color(0xFFFFFFFF);
+
+  late Color appColor = Color(0xFF9D9DCC);
 }
 
 extension TextStyleHelper on TextStyle {

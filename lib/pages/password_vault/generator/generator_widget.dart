@@ -274,7 +274,7 @@ class _GeneratorWidgetState extends State<GeneratorWidget> {
                       child: Container(
                         width: 280.0,
                         child: Slider(
-                          activeColor: Color(0xFF24254E),
+                          activeColor: FlutterFlowTheme.of(context).appColor,
                           inactiveColor: FlutterFlowTheme.of(context).alternate,
                           min: 3.0,
                           max: 40.0,
@@ -336,8 +336,9 @@ class _GeneratorWidgetState extends State<GeneratorWidget> {
                           width: 2,
                           color: FlutterFlowTheme.of(context).alternate,
                         ),
-                        activeColor: Color(0xFF24254E),
-                        checkColor: FlutterFlowTheme.of(context).info,
+                        activeColor: FlutterFlowTheme.of(context).appColor,
+                        checkColor:
+                            FlutterFlowTheme.of(context).secondaryBackground,
                       ),
                     ),
                     Text(
@@ -387,8 +388,9 @@ class _GeneratorWidgetState extends State<GeneratorWidget> {
                           width: 2,
                           color: FlutterFlowTheme.of(context).alternate,
                         ),
-                        activeColor: Color(0xFF24254E),
-                        checkColor: FlutterFlowTheme.of(context).info,
+                        activeColor: FlutterFlowTheme.of(context).appColor,
+                        checkColor:
+                            FlutterFlowTheme.of(context).secondaryBackground,
                       ),
                     ),
                     Text(
