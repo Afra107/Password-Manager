@@ -8,6 +8,7 @@ import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'login_account_model.dart';
@@ -35,6 +36,14 @@ class _LoginAccountWidgetState extends State<LoginAccountWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => LoginAccountModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      safeSetState(() {
+        _model.emailAddressTextController?.clear();
+        _model.passwordTextController?.clear();
+      });
+    });
 
     _model.emailAddressTextController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
@@ -91,7 +100,7 @@ class _LoginAccountWidgetState extends State<LoginAccountWidget>
               height: 280.0,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Color(0xFF24254E), Color(0xFF5C5E9B)],
+                  colors: [Color(0xFF24254E), Color(0xFF9D50BB)],
                   stops: [0.0, 0.9],
                   begin: AlignmentDirectional(-1.0, -1.0),
                   end: AlignmentDirectional(1.0, 1.0),
@@ -116,7 +125,7 @@ class _LoginAccountWidgetState extends State<LoginAccountWidget>
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
                       child: Icon(
-                        Icons.lock,
+                        Icons.lock_person,
                         color: Color(0xFF24254E),
                         size: 70.0,
                       ),
@@ -161,6 +170,7 @@ class _LoginAccountWidgetState extends State<LoginAccountWidget>
                       child: TextFormField(
                         controller: _model.emailAddressTextController,
                         focusNode: _model.emailAddressFocusNode,
+                        autofillHints: [AutofillHints.email],
                         obscureText: false,
                         decoration: InputDecoration(
                           labelText: 'Email Address',
@@ -217,14 +227,14 @@ class _LoginAccountWidgetState extends State<LoginAccountWidget>
                           ),
                           errorBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).primary,
+                              color: Color(0xFFF03E1E),
                               width: 1.0,
                             ),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           focusedErrorBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).primary,
+                              color: Color(0xFFF03E1E),
                               width: 1.0,
                             ),
                             borderRadius: BorderRadius.circular(8.0),
@@ -252,6 +262,7 @@ class _LoginAccountWidgetState extends State<LoginAccountWidget>
                                   .bodyMedium
                                   .fontStyle,
                             ),
+                        keyboardType: TextInputType.emailAddress,
                         validator: _model.emailAddressTextControllerValidator
                             .asValidator(context),
                       ),
@@ -379,6 +390,7 @@ class _LoginAccountWidgetState extends State<LoginAccountWidget>
                         children: [
                           FFButtonWidget(
                             onPressed: () async {
+                              await authManager.refreshUser();
                               GoRouter.of(context).prepareAuthEvent();
 
                               final user = await authManager.signInWithEmail(
@@ -390,53 +402,94 @@ class _LoginAccountWidgetState extends State<LoginAccountWidget>
                                 return;
                               }
 
-                              _model.deviceSalt = await actions.getDeviceSalt();
-                              _model.hashedPassword =
-                                  await actions.hashWithDeviceSalt(
-                                _model.passwordTextController.text,
-                                _model.deviceSalt!,
-                              );
-                              _model.userAccount =
-                                  await queryAccountInfoRecordOnce(
-                                queryBuilder: (accountInfoRecord) =>
-                                    accountInfoRecord.where(
-                                  'email',
-                                  isEqualTo:
-                                      _model.emailAddressTextController.text,
-                                ),
-                                singleRecord: true,
-                              ).then((s) => s.firstOrNull);
-                              _model.symmetricKey = await actions.decryptKey(
-                                _model.userAccount!.enSymmetricKey,
-                                _model.hashedPassword!,
-                                _model.userAccount!.initVector,
-                              );
-                              FFAppState().symmetricKey = _model.symmetricKey!;
-                              FFAppState().initVector =
-                                  _model.userAccount!.initVector;
-                              FFAppState().accountReference =
-                                  _model.userAccount?.reference;
-                              safeSetState(() {});
-                              if (_model.userAccount!.enable2FA) {
-                                _model.setupKey2FA = await actions.decryptKey(
-                                  _model.userAccount!.en2FAsetupKey,
-                                  _model.symmetricKey!,
+                              if (currentUserEmailVerified) {
+                                _model.deviceSalt =
+                                    await actions.getDeviceSalt();
+                                _model.hashedPassword =
+                                    await actions.hashWithDeviceSalt(
+                                  _model.passwordTextController.text,
+                                  _model.deviceSalt!,
+                                );
+                                _model.userAccount =
+                                    await queryAccountInfoRecordOnce(
+                                  queryBuilder: (accountInfoRecord) =>
+                                      accountInfoRecord.where(
+                                    'email',
+                                    isEqualTo:
+                                        _model.emailAddressTextController.text,
+                                  ),
+                                  singleRecord: true,
+                                ).then((s) => s.firstOrNull);
+                                _model.symmetricKey = await actions.decryptKey(
+                                  _model.userAccount!.enSymmetricKey,
+                                  _model.hashedPassword!,
                                   _model.userAccount!.initVector,
                                 );
+                                FFAppState().symmetricKey =
+                                    _model.symmetricKey!;
+                                FFAppState().initVector =
+                                    _model.userAccount!.initVector;
+                                FFAppState().accountReference =
+                                    _model.userAccount?.reference;
+                                safeSetState(() {});
+                                if (_model.userAccount!.enable2FA) {
+                                  _model.setupKey =
+                                      await actions.decrypt2FASetupKey(
+                                    _model.userAccount!.en2FAsetupKey,
+                                    _model.symmetricKey!,
+                                    _model.userAccount!.initVector,
+                                  );
 
-                                context.pushNamedAuth(
-                                  VerifyCodeWidget.routeName,
-                                  context.mounted,
-                                  queryParameters: {
-                                    'setupKey2FA': serializeParam(
-                                      _model.setupKey2FA,
-                                      ParamType.String,
-                                    ),
-                                  }.withoutNulls,
-                                );
+                                  context.pushNamedAuth(
+                                    VerifyCodeWidget.routeName,
+                                    context.mounted,
+                                    queryParameters: {
+                                      'setupKey2FA': serializeParam(
+                                        _model.setupKey,
+                                        ParamType.String,
+                                      ),
+                                    }.withoutNulls,
+                                  );
+                                } else {
+                                  context.goNamedAuth(HomePageWidget.routeName,
+                                      context.mounted);
+                                }
                               } else {
-                                context.goNamedAuth(
-                                    HomePageWidget.routeName, context.mounted);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Your email is not verified! In order to continue, you first have to verify your account.',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.inter(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                    ),
+                                    duration: Duration(milliseconds: 4000),
+                                    backgroundColor:
+                                        FlutterFlowTheme.of(context).tertiary,
+                                  ),
+                                );
                               }
 
                               safeSetState(() {});
@@ -543,6 +596,37 @@ class _LoginAccountWidgetState extends State<LoginAccountWidget>
                 ),
               ),
             ),
+            if (!currentUserEmailVerified && loggedIn)
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(20.0, 10.0, 20.0, 10.0),
+                child: InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () async {
+                    context.pushNamed(VerifyEmailWidget.routeName);
+                  },
+                  child: Text(
+                    'Verify your Email',
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          font: GoogleFonts.inter(
+                            fontWeight: FontWeight.w600,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .fontStyle,
+                          ),
+                          color: Color(0xFF24254E),
+                          fontSize: 15.0,
+                          letterSpacing: 0.0,
+                          fontWeight: FontWeight.w600,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                          decoration: TextDecoration.underline,
+                        ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),

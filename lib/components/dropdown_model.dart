@@ -8,6 +8,8 @@ class DropdownModel extends FlutterFlowModel<DropdownWidget> {
 
   // Stores action output result for [Firestore Query - Query a collection] action in setting widget.
   AccountInfoRecord? accountInfo;
+  // Stores action output result for [Custom Action - decrypt2FASetupKey] action in setting widget.
+  String? setupKey;
 
   @override
   void initState(BuildContext context) {}

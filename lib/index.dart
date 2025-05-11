@@ -1,6 +1,4 @@
 // Export pages
-export '/pages/authentication/set_master_pwd/set_master_pwd_widget.dart'
-    show SetMasterPwdWidget;
 export '/pages/authentication/login_account/login_account_widget.dart'
     show LoginAccountWidget;
 export '/pages/home_page/home_page_widget.dart' show HomePageWidget;
@@ -19,3 +17,7 @@ export '/pages/authentication/register_account/register_account_widget.dart'
     show RegisterAccountWidget;
 export '/pages/authentication/verify_code/verify_code_widget.dart'
     show VerifyCodeWidget;
+export '/pages/authentication/verify_email/verify_email_widget.dart'
+    show VerifyEmailWidget;
+export '/pages/password_vault/password_vault_widget.dart'
+    show PasswordVaultWidget;

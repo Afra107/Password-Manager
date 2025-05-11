@@ -71,7 +71,7 @@ class _ViewLoginWidgetState extends State<ViewLoginWidget> {
               size: 24.0,
             ),
             onPressed: () async {
-              context.goNamed(HomePageWidget.routeName);
+              context.goNamed(PasswordVaultWidget.routeName);
             },
           ),
           actions: [
@@ -136,7 +136,7 @@ class _ViewLoginWidgetState extends State<ViewLoginWidget> {
                 if (confirmDialogResponse) {
                   await widget.itemDetail!.reference.delete();
 
-                  context.goNamed(HomePageWidget.routeName);
+                  context.goNamed(PasswordVaultWidget.routeName);
                 }
               },
             ),
@@ -156,7 +156,7 @@ class _ViewLoginWidgetState extends State<ViewLoginWidget> {
                     context: context,
                     isGlobal: false,
                     avoidOverflow: true,
-                    targetAnchor: AlignmentDirectional(0.0, 4.3)
+                    targetAnchor: AlignmentDirectional(0.0, 3.5)
                         .resolve(Directionality.of(context)),
                     followerAnchor: AlignmentDirectional(0.0, 0.0)
                         .resolve(Directionality.of(context)),
@@ -412,9 +412,10 @@ class _ViewLoginWidgetState extends State<ViewLoginWidget> {
                   ),
                   Row(
                     mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        width: 340.0,
+                        width: MediaQuery.sizeOf(context).width * 0.85,
                         decoration: BoxDecoration(),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
@@ -480,7 +481,7 @@ class _ViewLoginWidgetState extends State<ViewLoginWidget> {
                       ),
                       Padding(
                         padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 20.0, 6.0),
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 27.0, 6.0),
                         child: InkWell(
                           splashColor: Colors.transparent,
                           focusColor: Colors.transparent,

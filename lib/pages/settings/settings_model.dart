@@ -10,7 +10,7 @@ class SettingsModel extends FlutterFlowModel<SettingsWidget> {
   bool? switchListTileValue;
   // Stores action output result for [Custom Action - generate2FAsetupKey] action in SwitchListTile widget.
   String? secretvalue;
-  // Stores action output result for [Custom Action - encryptKey] action in SwitchListTile widget.
+  // Stores action output result for [Custom Action - encrypt2FASetupKey] action in SwitchListTile widget.
   String? en2FAKey;
 
   @override

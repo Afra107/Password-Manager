@@ -4,25 +4,28 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/custom_code/actions/index.dart' as actions;
+import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'reset_password_model.dart';
-export 'reset_password_model.dart';
+import 'package:provider/provider.dart';
+import 'verify_email_model.dart';
+export 'verify_email_model.dart';
 
-class ResetPasswordWidget extends StatefulWidget {
-  const ResetPasswordWidget({super.key});
+class VerifyEmailWidget extends StatefulWidget {
+  const VerifyEmailWidget({super.key});
 
-  static String routeName = 'ResetPassword';
-  static String routePath = '/resetPassword';
+  static String routeName = 'VerifyEmail';
+  static String routePath = '/verifyEmail';
 
   @override
-  State<ResetPasswordWidget> createState() => _ResetPasswordWidgetState();
+  State<VerifyEmailWidget> createState() => _VerifyEmailWidgetState();
 }
 
-class _ResetPasswordWidgetState extends State<ResetPasswordWidget>
+class _VerifyEmailWidgetState extends State<VerifyEmailWidget>
     with TickerProviderStateMixin {
-  late ResetPasswordModel _model;
+  late VerifyEmailModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -31,10 +34,7 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ResetPasswordModel());
-
-    _model.emailAddressTextController ??= TextEditingController();
-    _model.emailAddressFocusNode ??= FocusNode();
+    _model = createModel(context, () => VerifyEmailModel());
 
     animationsMap.addAll({
       'textOnPageLoadAnimation': AnimationInfo(
@@ -69,6 +69,8 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget>
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -125,16 +127,20 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget>
                         ),
                       ),
                     ),
-                    Icon(
-                      Icons.lock_person,
-                      color: Color(0xFF24254E),
-                      size: 70.0,
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+                      child: Icon(
+                        Icons.email,
+                        color: Color(0xFF24254E),
+                        size: 60.0,
+                      ),
                     ),
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                       child: Text(
-                        'Reset Password',
+                        'Email Verification',
                         style:
                             FlutterFlowTheme.of(context).labelMedium.override(
                                   font: GoogleFonts.openSans(
@@ -159,7 +165,7 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget>
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -167,7 +173,7 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget>
                     Padding(
                       padding: EdgeInsets.all(20.0),
                       child: Text(
-                        'We will send you an email with a link to reset your password. Please enter the email associated with your account below. ',
+                        'We will send you an email with a link for verification. Please check your inbox to verify it. ',
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               font: GoogleFonts.inter(
@@ -177,7 +183,7 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget>
                                     .fontStyle,
                               ),
                               color: Color(0xFF14181B),
-                              fontSize: 16.0,
+                              fontSize: 17.0,
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.w500,
                               fontStyle: FlutterFlowTheme.of(context)
@@ -188,124 +194,59 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget>
                     ),
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(24.0, 12.0, 24.0, 0.0),
-                      child: TextFormField(
-                        controller: _model.emailAddressTextController,
-                        focusNode: _model.emailAddressFocusNode,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          labelText: 'Email Address',
-                          labelStyle:
-                              FlutterFlowTheme.of(context).bodySmall.override(
-                                    font: GoogleFonts.inter(
-                                      fontWeight: FontWeight.w500,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodySmall
-                                          .fontStyle,
-                                    ),
-                                    color: Color(0xFF13171A),
-                                    fontSize: 14.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w500,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodySmall
-                                        .fontStyle,
-                                  ),
-                          hintText: 'Enter your email...',
-                          hintStyle:
-                              FlutterFlowTheme.of(context).bodySmall.override(
-                                    font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodySmall
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodySmall
-                                          .fontStyle,
-                                    ),
-                                    color: Color(0xFF14181B),
-                                    fontSize: 12.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodySmall
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodySmall
-                                        .fontStyle,
-                                  ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0xFF57636C),
-                              width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).primary,
-                              width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).primary,
-                              width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          filled: true,
-                          fillColor: Color(0xFFF1F4F8),
-                          contentPadding: EdgeInsetsDirectional.fromSTEB(
-                              20.0, 24.0, 20.0, 24.0),
-                        ),
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              font: GoogleFonts.inter(
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .fontStyle,
-                              ),
-                              color: Color(0xFF13171A),
-                              letterSpacing: 0.0,
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontStyle,
-                            ),
-                        validator: _model.emailAddressTextControllerValidator
-                            .asValidator(context),
-                      ),
-                    ),
-                    Padding(
-                      padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          if (_model.emailAddressTextController.text.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'Email required!',
-                                ),
+                          await authManager.refreshUser();
+                          await authManager.sendEmailVerification();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Check your inbox to verify the email...',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      font: GoogleFonts.inter(
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
                               ),
-                            );
-                            return;
-                          }
-                          await authManager.resetPassword(
-                            email: _model.emailAddressTextController.text,
-                            context: context,
+                              duration: Duration(milliseconds: 10000),
+                              backgroundColor:
+                                  FlutterFlowTheme.of(context).secondary,
+                            ),
                           );
+                          for (int loop1Index = 0;
+                              loop1Index < FFAppState().dummyList.length;
+                              loop1Index += 1) {
+                            final currentLoop1Item =
+                                FFAppState().dummyList[loop1Index];
+                            if (currentUserEmailVerified) {
+                              ScaffoldMessenger.of(context).clearSnackBars();
+
+                              context.goNamed(HomePageWidget.routeName);
+
+                              return;
+                            } else {
+                              await Future.delayed(
+                                  const Duration(milliseconds: 1000));
+                              await actions.reloadCurrentUser();
+                            }
+                          }
                         },
                         text: 'Send Link',
                         options: FFButtonOptions(

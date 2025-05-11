@@ -116,7 +116,7 @@ class _AddLoginWidgetState extends State<AddLoginWidget> {
                     context: context,
                     isGlobal: false,
                     avoidOverflow: true,
-                    targetAnchor: AlignmentDirectional(0.0, 4.3)
+                    targetAnchor: AlignmentDirectional(0.0, 3.5)
                         .resolve(Directionality.of(context)),
                     followerAnchor: AlignmentDirectional(0.0, 0.0)
                         .resolve(Directionality.of(context)),
@@ -337,7 +337,7 @@ class _AddLoginWidgetState extends State<AddLoginWidget> {
                         _model.passwordVisibility
                             ? Icons.visibility_outlined
                             : Icons.visibility_off_outlined,
-                        color: Color(0xFF5A666F),
+                        color: FlutterFlowTheme.of(context).primaryText,
                         size: 20.0,
                       ),
                     ),
@@ -578,7 +578,7 @@ class _AddLoginWidgetState extends State<AddLoginWidget> {
                           ),
                           vaultItemsRecordReference);
 
-                      context.goNamed(HomePageWidget.routeName);
+                      context.goNamed(PasswordVaultWidget.routeName);
 
                       safeSetState(() {});
                     },

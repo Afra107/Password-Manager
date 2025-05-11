@@ -91,7 +91,7 @@ class _VerifyCodeWidgetState extends State<VerifyCodeWidget>
               height: 280.0,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Color(0xFF24254E), Color(0xFF5C5E9B)],
+                  colors: [Color(0xFF24254E), Color(0xFF9D50BB)],
                   stops: [0.0, 0.9],
                   begin: AlignmentDirectional(-1.0, -1.0),
                   end: AlignmentDirectional(1.0, 1.0),
@@ -125,14 +125,14 @@ class _VerifyCodeWidgetState extends State<VerifyCodeWidget>
                             color: Color(0xFF24254E),
                             size: 35.0,
                           ),
-                          onPressed: () {
-                            print('IconButton pressed ...');
+                          onPressed: () async {
+                            context.safePop();
                           },
                         ),
                       ),
                     ),
                     Icon(
-                      Icons.lock,
+                      Icons.password,
                       color: Color(0xFF24254E),
                       size: 70.0,
                     ),
@@ -182,6 +182,8 @@ class _VerifyCodeWidgetState extends State<VerifyCodeWidget>
                                   .bodyMedium
                                   .fontStyle,
                             ),
+                            color: Color(0xFF14181B),
+                            fontSize: 16.0,
                             letterSpacing: 0.0,
                             fontWeight: FontWeight.w500,
                             fontStyle: FlutterFlowTheme.of(context)
@@ -238,7 +240,7 @@ class _VerifyCodeWidgetState extends State<VerifyCodeWidget>
                         ),
                         shape: PinCodeFieldShape.box,
                         activeColor: FlutterFlowTheme.of(context).primaryText,
-                        inactiveColor: FlutterFlowTheme.of(context).alternate,
+                        inactiveColor: Color(0xFF262D34),
                         selectedColor: FlutterFlowTheme.of(context).primary,
                       ),
                       controller: _model.pinCodeController,

@@ -9,3 +9,7 @@ export 'decrypt_ciphertext.dart' show decryptCiphertext;
 export 'generate_password.dart' show generatePassword;
 export 'generate2_f_asetup_key.dart' show generate2FAsetupKey;
 export 'verify2_f_a_code.dart' show verify2FACode;
+export 'reload_current_user.dart' show reloadCurrentUser;
+export 'encrypt2_f_a_setup_key.dart' show encrypt2FASetupKey;
+export 'decrypt2_f_a_setup_key.dart' show decrypt2FASetupKey;
+export 'copy_to_clipboard.dart' show copyToClipboard;

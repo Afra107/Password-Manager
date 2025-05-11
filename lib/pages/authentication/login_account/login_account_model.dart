@@ -24,8 +24,8 @@ class LoginAccountModel extends FlutterFlowModel<LoginAccountWidget> {
   AccountInfoRecord? userAccount;
   // Stores action output result for [Custom Action - decryptKey] action in Button-Login widget.
   String? symmetricKey;
-  // Stores action output result for [Custom Action - decryptKey] action in Button-Login widget.
-  String? setupKey2FA;
+  // Stores action output result for [Custom Action - decrypt2FASetupKey] action in Button-Login widget.
+  String? setupKey;
 
   @override
   void initState(BuildContext context) {

@@ -102,7 +102,7 @@ class _GeneratorWidgetState extends State<GeneratorWidget> {
                     context: context,
                     isGlobal: false,
                     avoidOverflow: true,
-                    targetAnchor: AlignmentDirectional(0.0, 4.3)
+                    targetAnchor: AlignmentDirectional(0.0, 3.5)
                         .resolve(Directionality.of(context)),
                     followerAnchor: AlignmentDirectional(0.0, 0.0)
                         .resolve(Directionality.of(context)),
@@ -272,7 +272,7 @@ class _GeneratorWidgetState extends State<GeneratorWidget> {
                         showValueIndicator: ShowValueIndicator.always,
                       ),
                       child: Container(
-                        width: 300.0,
+                        width: 280.0,
                         child: Slider(
                           activeColor: Color(0xFF24254E),
                           inactiveColor: FlutterFlowTheme.of(context).alternate,
@@ -392,7 +392,7 @@ class _GeneratorWidgetState extends State<GeneratorWidget> {
                       ),
                     ),
                     Text(
-                      'Symbols (e.g. @#\$%)',
+                      'Special symbols (e.g. @#\$%)',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             font: GoogleFonts.inter(
                               fontWeight: FlutterFlowTheme.of(context)
@@ -416,7 +416,7 @@ class _GeneratorWidgetState extends State<GeneratorWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(20.0, 60.0, 20.0, 40.0),
+                padding: EdgeInsetsDirectional.fromSTEB(20.0, 40.0, 20.0, 40.0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,

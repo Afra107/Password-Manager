@@ -108,7 +108,7 @@ class _UpdateLoginWidgetState extends State<UpdateLoginWidget> {
                     context: context,
                     isGlobal: false,
                     avoidOverflow: true,
-                    targetAnchor: AlignmentDirectional(0.0, 4.3)
+                    targetAnchor: AlignmentDirectional(0.0, 3.5)
                         .resolve(Directionality.of(context)),
                     followerAnchor: AlignmentDirectional(0.0, 0.0)
                         .resolve(Directionality.of(context)),
@@ -327,7 +327,7 @@ class _UpdateLoginWidgetState extends State<UpdateLoginWidget> {
                         _model.passwordVisibility
                             ? Icons.visibility_outlined
                             : Icons.visibility_off_outlined,
-                        color: Color(0xFF5A666F),
+                        color: FlutterFlowTheme.of(context).primaryText,
                         size: 20.0,
                       ),
                     ),

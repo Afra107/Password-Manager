@@ -76,29 +76,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
-      errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? HomePageWidget() : LoginAccountWidget(),
+      errorBuilder: (context, state) => appStateNotifier.loggedIn
+          ? LoginAccountWidget()
+          : LoginAccountWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) => appStateNotifier.loggedIn
-              ? HomePageWidget()
+              ? LoginAccountWidget()
               : LoginAccountWidget(),
-        ),
-        FFRoute(
-          name: SetMasterPwdWidget.routeName,
-          path: SetMasterPwdWidget.routePath,
-          builder: (context, params) => SetMasterPwdWidget(
-            email: params.getParam(
-              'email',
-              ParamType.String,
-            ),
-            username: params.getParam(
-              'username',
-              ParamType.String,
-            ),
-          ),
         ),
         FFRoute(
           name: LoginAccountWidget.routeName,
@@ -164,6 +151,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'initial2FAState',
               ParamType.bool,
             ),
+            setupKey: params.getParam(
+              'setupKey',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -185,6 +176,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.String,
             ),
           ),
+        ),
+        FFRoute(
+          name: VerifyEmailWidget.routeName,
+          path: VerifyEmailWidget.routePath,
+          builder: (context, params) => VerifyEmailWidget(),
+        ),
+        FFRoute(
+          name: PasswordVaultWidget.routeName,
+          path: PasswordVaultWidget.routePath,
+          builder: (context, params) => PasswordVaultWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

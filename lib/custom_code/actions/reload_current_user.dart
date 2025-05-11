@@ -8,15 +8,13 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import 'dart:math';
-import 'dart:typed_data';
-import 'package:base32/base32.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-Future<String> generate2FAsetupKey() async {
-  int length = 16;
-  final random = Random.secure();
-  final bytes = List<int>.generate(length, (_) => random.nextInt(256));
-  return base32.encode(Uint8List.fromList(bytes));
+Future<void> reloadCurrentUser() async {
+  final user = FirebaseAuth.instance.currentUser;
+  if (user != null) {
+    await user.reload();
+  }
 }
 
 // Set your action name, define your arguments and return parameter,
