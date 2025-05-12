@@ -557,22 +557,7 @@ class _UpdateLoginWidgetState extends State<UpdateLoginWidget> {
                           await VaultItemsRecord.getDocumentOnce(
                               widget.initialDetails!.reference);
 
-                      context.goNamed(
-                        ViewLoginWidget.routeName,
-                        queryParameters: {
-                          'itemDetail': serializeParam(
-                            _model.updatedDetails,
-                            ParamType.Document,
-                          ),
-                          'decryptedPwd': serializeParam(
-                            _model.passwordTextController.text,
-                            ParamType.String,
-                          ),
-                        }.withoutNulls,
-                        extra: <String, dynamic>{
-                          'itemDetail': _model.updatedDetails,
-                        },
-                      );
+                      context.pushNamed(PasswordVaultWidget.routeName);
 
                       safeSetState(() {});
                     },
