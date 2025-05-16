@@ -6,30 +6,30 @@
 
 * **User Registration and Authentication**
 
-  * Users register with a username, email, and master password.
-  * Master password is hashed using PBKDF2 (1000 iterations) with SHA-256 and device ID as salt.
-  * A unique symmetric key and initialization vector (IV) are generated and encrypted with the hashed password using AES-256-CBC, then stored in Firebase.
+  1. Users register with a username, email, and master password.
+  2. Master password is hashed using PBKDF2 (1000 iterations) with SHA-256 and device ID as salt.
+  3. A unique symmetric key and initialization vector (IV) are generated and encrypted with the hashed password using AES-256-CBC, then stored in Firebase.
 
 * **Email Verification**
 
-  * Verification link sent on registration.
-  * Users must verify their email before accessing the app.
+  1. Verification link sent on registration.
+  2. Users must verify their email before accessing the app.
 
 * **Two-Factor Authentication (2FA)**
 
-  * Optional 2FA using Google Authenticator.
-  * Secret setup key is encrypted using the symmetric key and IV.
-  * Users enter the authenticator code during login if 2FA is enabled.
+  1. Optional 2FA using Google Authenticator.
+  2. Secret setup key is encrypted using the symmetric key and IV.
+  3. Users enter the authenticator code during login if 2FA is enabled.
 
 * **Vault Functionality**
 
-  * Users can add, view, update, and delete login credentials.
-  * Passwords are encrypted with the symmetric key before storage.
-  * Decryption is performed securely at runtime for viewing.
+  1. Users can add, view, update, and delete login credentials.
+  2. Passwords are encrypted with the symmetric key before storage.
+  3. Decryption is performed securely at runtime for viewing.
 
 * **Secure Password Generator**
 
-  * Generate passwords with custom length, digits, and special characters.
+  Generate passwords with custom length, digits, and special characters.
 
 ## Technologies Used
 
