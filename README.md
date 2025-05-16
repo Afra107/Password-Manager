@@ -29,7 +29,7 @@
 
 * **Secure Password Generator**
 
-  Generate passwords with custom length, digits, and special characters.
+  1. Generate passwords with custom length, digits, and special characters.
 
 ## Technologies Used
 
