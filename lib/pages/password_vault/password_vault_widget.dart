@@ -130,156 +130,172 @@ class _PasswordVaultWidgetState extends State<PasswordVaultWidget> {
         ),
         body: SafeArea(
           top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(20.0, 40.0, 0.0, 0.0),
-                child: Text(
-                  'ALL LOGINS',
-                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        font: GoogleFonts.inter(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(20.0, 40.0, 0.0, 0.0),
+                  child: Text(
+                    'ALL LOGINS',
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          font: GoogleFonts.inter(
+                            fontWeight: FontWeight.w600,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .fontStyle,
+                          ),
+                          fontSize: 18.0,
+                          letterSpacing: 0.0,
                           fontWeight: FontWeight.w600,
                           fontStyle:
                               FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                         ),
-                        fontSize: 18.0,
-                        letterSpacing: 0.0,
-                        fontWeight: FontWeight.w600,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                      ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(15.0, 20.0, 15.0, 20.0),
-                child: StreamBuilder<List<VaultItemsRecord>>(
-                  stream: queryVaultItemsRecord(
-                    queryBuilder: (vaultItemsRecord) => vaultItemsRecord
-                        .where(
-                          'user',
-                          isEqualTo: currentUserUid,
-                        )
-                        .orderBy('website'),
                   ),
-                  builder: (context, snapshot) {
-                    // Customize what your widget looks like when it's loading.
-                    if (!snapshot.hasData) {
-                      return Center(
-                        child: SizedBox(
-                          width: 50.0,
-                          height: 50.0,
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              FlutterFlowTheme.of(context).primary,
-                            ),
-                          ),
-                        ),
-                      );
-                    }
-                    List<VaultItemsRecord> listViewVaultItemsRecordList =
-                        snapshot.data!;
-
-                    return ListView.separated(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: listViewVaultItemsRecordList.length,
-                      separatorBuilder: (_, __) => SizedBox(height: 10.0),
-                      itemBuilder: (context, listViewIndex) {
-                        final listViewVaultItemsRecord =
-                            listViewVaultItemsRecordList[listViewIndex];
-                        return InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            _model.decryptedPwd =
-                                await actions.decryptCiphertext(
-                              listViewVaultItemsRecord.password,
-                              FFAppState().symmetricKey,
-                              FFAppState().initVector,
-                            );
-
-                            context.pushNamed(
-                              ViewLoginWidget.routeName,
-                              queryParameters: {
-                                'itemDetail': serializeParam(
-                                  listViewVaultItemsRecord,
-                                  ParamType.Document,
-                                ),
-                                'decryptedPwd': serializeParam(
-                                  _model.decryptedPwd,
-                                  ParamType.String,
-                                ),
-                              }.withoutNulls,
-                              extra: <String, dynamic>{
-                                'itemDetail': listViewVaultItemsRecord,
-                              },
-                            );
-
-                            safeSetState(() {});
-                          },
-                          child: Container(
-                            width: 100.0,
-                            height: 80.0,
-                            decoration: BoxDecoration(
-                              color: Color(0xFFD1CFE6),
-                              borderRadius: BorderRadius.circular(10.0),
-                              border: Border.all(
-                                color: Color(0xFF24254E),
+                ),
+                Padding(
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(15.0, 20.0, 15.0, 20.0),
+                  child: StreamBuilder<List<VaultItemsRecord>>(
+                    stream: queryVaultItemsRecord(
+                      queryBuilder: (vaultItemsRecord) => vaultItemsRecord
+                          .where(
+                            'user',
+                            isEqualTo: currentUserUid,
+                          )
+                          .orderBy('website'),
+                    ),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50.0,
+                            height: 50.0,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                FlutterFlowTheme.of(context).primary,
                               ),
                             ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Align(
-                                      alignment: AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            10.0, 0.0, 10.0, 0.0),
-                                        child: Container(
-                                          width: 50.0,
-                                          height: 50.0,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFF24254E),
-                                            borderRadius:
-                                                BorderRadius.circular(30.0),
-                                          ),
-                                          alignment:
-                                              AlignmentDirectional(0.0, 0.0),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    2.0, 0.0, 0.0, 2.0),
-                                            child: Icon(
-                                              Icons.vpn_lock,
-                                              color: Colors.white,
-                                              size: 33.0,
+                          ),
+                        );
+                      }
+                      List<VaultItemsRecord> listViewVaultItemsRecordList =
+                          snapshot.data!;
+
+                      return ListView.separated(
+                        padding: EdgeInsets.zero,
+                        primary: false,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemCount: listViewVaultItemsRecordList.length,
+                        separatorBuilder: (_, __) => SizedBox(height: 10.0),
+                        itemBuilder: (context, listViewIndex) {
+                          final listViewVaultItemsRecord =
+                              listViewVaultItemsRecordList[listViewIndex];
+                          return InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              _model.decryptedPwd =
+                                  await actions.decryptCiphertext(
+                                listViewVaultItemsRecord.password,
+                                FFAppState().symmetricKey,
+                                FFAppState().initVector,
+                              );
+
+                              context.pushNamed(
+                                ViewLoginWidget.routeName,
+                                queryParameters: {
+                                  'itemDetail': serializeParam(
+                                    listViewVaultItemsRecord,
+                                    ParamType.Document,
+                                  ),
+                                  'decryptedPwd': serializeParam(
+                                    _model.decryptedPwd,
+                                    ParamType.String,
+                                  ),
+                                }.withoutNulls,
+                                extra: <String, dynamic>{
+                                  'itemDetail': listViewVaultItemsRecord,
+                                },
+                              );
+
+                              safeSetState(() {});
+                            },
+                            child: Container(
+                              width: 100.0,
+                              height: 80.0,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFD1CFE6),
+                                borderRadius: BorderRadius.circular(10.0),
+                                border: Border.all(
+                                  color: Color(0xFF24254E),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Align(
+                                        alignment:
+                                            AlignmentDirectional(0.0, 0.0),
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  10.0, 0.0, 10.0, 0.0),
+                                          child: Container(
+                                            width: 50.0,
+                                            height: 50.0,
+                                            decoration: BoxDecoration(
+                                              color: Color(0xFF24254E),
+                                              borderRadius:
+                                                  BorderRadius.circular(30.0),
+                                            ),
+                                            alignment:
+                                                AlignmentDirectional(0.0, 0.0),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(2.0, 0.0, 0.0, 2.0),
+                                              child: Icon(
+                                                Icons.vpn_lock,
+                                                color: Colors.white,
+                                                size: 33.0,
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          listViewVaultItemsRecord.website,
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                font: GoogleFonts.inter(
+                                      Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            listViewVaultItemsRecord.website,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  font: GoogleFonts.inter(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontStyle,
+                                                  ),
+                                                  color: Colors.black,
+                                                  fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w600,
                                                   fontStyle:
                                                       FlutterFlowTheme.of(
@@ -287,23 +303,27 @@ class _PasswordVaultWidgetState extends State<PasswordVaultWidget> {
                                                           .bodyMedium
                                                           .fontStyle,
                                                 ),
-                                                color: Colors.black,
-                                                fontSize: 16.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
-                                              ),
-                                        ),
-                                        SelectionArea(
-                                            child: Text(
-                                          listViewVaultItemsRecord.email,
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                font: GoogleFonts.inter(
+                                          ),
+                                          SelectionArea(
+                                              child: Text(
+                                            listViewVaultItemsRecord.email,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  font: GoogleFonts.inter(
+                                                    fontWeight:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontWeight,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontStyle,
+                                                  ),
+                                                  color: Colors.black,
+                                                  letterSpacing: 0.0,
                                                   fontWeight:
                                                       FlutterFlowTheme.of(
                                                               context)
@@ -315,52 +335,58 @@ class _PasswordVaultWidgetState extends State<PasswordVaultWidget> {
                                                           .bodyMedium
                                                           .fontStyle,
                                                 ),
-                                                color: Colors.black,
-                                                letterSpacing: 0.0,
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
-                                              ),
-                                        )),
-                                      ].divide(SizedBox(height: 7.0)),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          10.0, 0.0, 15.0, 0.0),
-                                      child: InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          _model.pwd =
-                                              await actions.decryptCiphertext(
-                                            listViewVaultItemsRecord.password,
-                                            FFAppState().symmetricKey,
-                                            FFAppState().initVector,
-                                          );
-                                          await Clipboard.setData(
-                                              ClipboardData(text: _model.pwd!));
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                'Password copied to clipboard!',
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .labelMedium
-                                                    .override(
-                                                      font: GoogleFonts.inter(
+                                          )),
+                                        ].divide(SizedBox(height: 7.0)),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            10.0, 0.0, 15.0, 0.0),
+                                        child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            _model.pwd =
+                                                await actions.decryptCiphertext(
+                                              listViewVaultItemsRecord.password,
+                                              FFAppState().symmetricKey,
+                                              FFAppState().initVector,
+                                            );
+                                            await Clipboard.setData(
+                                                ClipboardData(
+                                                    text: _model.pwd!));
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'Password copied to clipboard!',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .labelMedium
+                                                      .override(
+                                                        font: GoogleFonts.inter(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .labelMedium
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .labelMedium
+                                                                  .fontStyle,
+                                                        ),
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryText,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -372,51 +398,36 @@ class _PasswordVaultWidgetState extends State<PasswordVaultWidget> {
                                                                 .labelMedium
                                                                 .fontStyle,
                                                       ),
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelMedium
-                                                              .fontWeight,
-                                                      fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelMedium
-                                                              .fontStyle,
-                                                    ),
+                                                ),
+                                                duration: Duration(
+                                                    milliseconds: 4000),
+                                                backgroundColor:
+                                                    Color(0xFF39D27D),
                                               ),
-                                              duration:
-                                                  Duration(milliseconds: 4000),
-                                              backgroundColor:
-                                                  Color(0xFF39D27D),
-                                            ),
-                                          );
+                                            );
 
-                                          safeSetState(() {});
-                                        },
-                                        child: Icon(
-                                          Icons.content_copy,
-                                          color: Colors.black,
-                                          size: 26.0,
+                                            safeSetState(() {});
+                                          },
+                                          child: Icon(
+                                            Icons.content_copy,
+                                            color: Colors.black,
+                                            size: 26.0,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    );
-                  },
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
