@@ -5,7 +5,7 @@
 
 
     <application
-        android:label="Password Manager"
+        android:label="Password Mgr 2"
         tools:replace="android:label"
         android:icon="@mipmap/ic_launcher"
         android:requestLegacyExternalStorage="true">
@@ -45,7 +45,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="passwordmanager" android:host="passwordmanager.com" />
+                <data android:scheme="passwordmgr2" android:host="passwordmgr2.com" />
             </intent-filter>
 
         </activity>

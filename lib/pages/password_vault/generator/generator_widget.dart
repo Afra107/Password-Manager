@@ -272,7 +272,7 @@ class _GeneratorWidgetState extends State<GeneratorWidget> {
                         showValueIndicator: ShowValueIndicator.always,
                       ),
                       child: Container(
-                        width: 280.0,
+                        width: 270.0,
                         child: Slider(
                           activeColor: FlutterFlowTheme.of(context).appColor,
                           inactiveColor: FlutterFlowTheme.of(context).alternate,
@@ -332,10 +332,12 @@ class _GeneratorWidgetState extends State<GeneratorWidget> {
                         onChanged: (newValue) async {
                           safeSetState(() => _model.checkboxValue1 = newValue!);
                         },
-                        side: BorderSide(
-                          width: 2,
-                          color: FlutterFlowTheme.of(context).alternate,
-                        ),
+                        side: (FlutterFlowTheme.of(context).alternate != null)
+                            ? BorderSide(
+                                width: 2,
+                                color: FlutterFlowTheme.of(context).alternate,
+                              )
+                            : null,
                         activeColor: FlutterFlowTheme.of(context).appColor,
                         checkColor:
                             FlutterFlowTheme.of(context).secondaryBackground,
@@ -384,10 +386,12 @@ class _GeneratorWidgetState extends State<GeneratorWidget> {
                         onChanged: (newValue) async {
                           safeSetState(() => _model.checkboxValue2 = newValue!);
                         },
-                        side: BorderSide(
-                          width: 2,
-                          color: FlutterFlowTheme.of(context).alternate,
-                        ),
+                        side: (FlutterFlowTheme.of(context).alternate != null)
+                            ? BorderSide(
+                                width: 2,
+                                color: FlutterFlowTheme.of(context).alternate,
+                              )
+                            : null,
                         activeColor: FlutterFlowTheme.of(context).appColor,
                         checkColor:
                             FlutterFlowTheme.of(context).secondaryBackground,

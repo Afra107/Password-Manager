@@ -164,155 +164,161 @@ class _VerifyCodeWidgetState extends State<VerifyCodeWidget>
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 30.0),
-                    child: Text(
-                      'Enter the 6-digit code from your Google Authenticator app to continue.',
-                      textAlign: TextAlign.center,
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            font: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontStyle,
-                            ),
-                            color: Color(0xFF14181B),
-                            fontSize: 16.0,
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.w500,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontStyle,
-                          ),
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
-                    child: PinCodeTextField(
-                      autoDisposeControllers: false,
-                      appContext: context,
-                      length: 6,
-                      textStyle:
-                          FlutterFlowTheme.of(context).bodyLarge.override(
-                                font: GoogleFonts.inter(
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .bodyLarge
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyLarge
-                                      .fontStyle,
-                                ),
-                                color: Color(0xFF262D34),
-                                letterSpacing: 0.0,
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .bodyLarge
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodyLarge
-                                    .fontStyle,
-                              ),
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      enableActiveFill: false,
-                      autoFocus: true,
-                      focusNode: _model.pinCodeFocusNode,
-                      enablePinAutofill: false,
-                      errorTextSpace: 16.0,
-                      showCursor: true,
-                      cursorColor: FlutterFlowTheme.of(context).primary,
-                      obscureText: false,
-                      hintCharacter: '-',
-                      keyboardType: TextInputType.number,
-                      pinTheme: PinTheme(
-                        fieldHeight: 44.0,
-                        fieldWidth: 44.0,
-                        borderWidth: 2.0,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(12.0),
-                          bottomRight: Radius.circular(12.0),
-                          topLeft: Radius.circular(12.0),
-                          topRight: Radius.circular(12.0),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            20.0, 20.0, 20.0, 30.0),
+                        child: Text(
+                          'Enter the 6-digit code from your Google Authenticator app to continue.',
+                          textAlign: TextAlign.center,
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    font: GoogleFonts.inter(
+                                      fontWeight: FontWeight.w500,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    color: Color(0xFF14181B),
+                                    fontSize: 16.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w500,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
                         ),
-                        shape: PinCodeFieldShape.box,
-                        activeColor: Color(0xFF262D34),
-                        inactiveColor: Color(0xFF262D34),
-                        selectedColor: FlutterFlowTheme.of(context).primary,
                       ),
-                      controller: _model.pinCodeController,
-                      onChanged: (_) {},
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: _model.pinCodeControllerValidator
-                          .asValidator(context),
-                    ),
-                  ),
-                  Align(
-                    alignment: AlignmentDirectional(0.0, 0.0),
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
-                      child: FFButtonWidget(
-                        onPressed: () async {
-                          _model.userVerified = await actions.verify2FACode(
-                            widget.setupKey2FA!,
-                            _model.pinCodeController!.text,
-                          );
-                          if (_model.userVerified!) {
-                            context.pushNamed(HomePageWidget.routeName);
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'Code doesn\'t match!',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                ),
-                                duration: Duration(milliseconds: 4000),
-                                backgroundColor:
-                                    FlutterFlowTheme.of(context).tertiary,
-                              ),
-                            );
-                          }
-
-                          safeSetState(() {});
-                        },
-                        text: 'Verify Code',
-                        options: FFButtonOptions(
-                          width: 150.0,
-                          height: 45.0,
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          iconPadding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: Color(0xFF24254E),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            20.0, 0.0, 20.0, 0.0),
+                        child: PinCodeTextField(
+                          autoDisposeControllers: false,
+                          appContext: context,
+                          length: 6,
                           textStyle:
-                              FlutterFlowTheme.of(context).titleSmall.override(
+                              FlutterFlowTheme.of(context).bodyLarge.override(
+                                    font: GoogleFonts.inter(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyLarge
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyLarge
+                                          .fontStyle,
+                                    ),
+                                    color: Color(0xFF262D34),
+                                    letterSpacing: 0.0,
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .bodyLarge
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyLarge
+                                        .fontStyle,
+                                  ),
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          enableActiveFill: false,
+                          autoFocus: true,
+                          focusNode: _model.pinCodeFocusNode,
+                          enablePinAutofill: false,
+                          errorTextSpace: 16.0,
+                          showCursor: true,
+                          cursorColor: FlutterFlowTheme.of(context).primary,
+                          obscureText: false,
+                          hintCharacter: '-',
+                          keyboardType: TextInputType.number,
+                          pinTheme: PinTheme(
+                            fieldHeight: 44.0,
+                            fieldWidth: 44.0,
+                            borderWidth: 2.0,
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(12.0),
+                              bottomRight: Radius.circular(12.0),
+                              topLeft: Radius.circular(12.0),
+                              topRight: Radius.circular(12.0),
+                            ),
+                            shape: PinCodeFieldShape.box,
+                            activeColor: Color(0xFF262D34),
+                            inactiveColor: Color(0xFF262D34),
+                            selectedColor: FlutterFlowTheme.of(context).primary,
+                          ),
+                          controller: _model.pinCodeController,
+                          onChanged: (_) {},
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: _model.pinCodeControllerValidator
+                              .asValidator(context),
+                        ),
+                      ),
+                      Align(
+                        alignment: AlignmentDirectional(0.0, 0.0),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 30.0, 0.0, 0.0),
+                          child: FFButtonWidget(
+                            onPressed: () async {
+                              _model.userVerified = await actions.verify2FACode(
+                                widget.setupKey2FA!,
+                                _model.pinCodeController!.text,
+                              );
+                              if (_model.userVerified!) {
+                                context.pushNamed(HomePageWidget.routeName);
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Code doesn\'t match!',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.inter(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                    ),
+                                    duration: Duration(milliseconds: 4000),
+                                    backgroundColor:
+                                        FlutterFlowTheme.of(context).tertiary,
+                                  ),
+                                );
+                              }
+
+                              safeSetState(() {});
+                            },
+                            text: 'Verify Code',
+                            options: FFButtonOptions(
+                              width: 150.0,
+                              height: 45.0,
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: Color(0xFF24254E),
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
                                     font: GoogleFonts.interTight(
                                       fontWeight: FontWeight.bold,
                                       fontStyle: FlutterFlowTheme.of(context)
@@ -326,13 +332,15 @@ class _VerifyCodeWidgetState extends State<VerifyCodeWidget>
                                         .titleSmall
                                         .fontStyle,
                                   ),
-                          elevation: 3.0,
-                          borderRadius: BorderRadius.circular(16.0),
+                              elevation: 3.0,
+                              borderRadius: BorderRadius.circular(16.0),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ],
