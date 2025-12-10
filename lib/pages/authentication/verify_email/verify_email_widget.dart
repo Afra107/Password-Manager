@@ -164,9 +164,9 @@ class _VerifyEmailWidgetState extends State<VerifyEmailWidget>
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
-              child: SingleChildScrollView(
+            Expanded(
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -232,7 +232,7 @@ class _VerifyEmailWidgetState extends State<VerifyEmailWidget>
                           );
                           for (int loop1Index = 0;
                               loop1Index < FFAppState().dummyList.length;
-                              loop1Index += 1) {
+                              loop1Index++) {
                             final currentLoop1Item =
                                 FFAppState().dummyList[loop1Index];
                             if (currentUserEmailVerified) {
@@ -243,7 +243,10 @@ class _VerifyEmailWidgetState extends State<VerifyEmailWidget>
                               return;
                             } else {
                               await Future.delayed(
-                                  const Duration(milliseconds: 1000));
+                                Duration(
+                                  milliseconds: 1000,
+                                ),
+                              );
                               await actions.reloadCurrentUser();
                             }
                           }
